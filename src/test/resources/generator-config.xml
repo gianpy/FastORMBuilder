@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="test" targetRuntime="MyBatis3">
+    <plugin type="com.chuntung.plugin.mybatis.builder.generator.plugins.MapperAnnotationPlugin">
+      <property name="customAnnotationType" value="org.apache.ibatis.annotations.Mapper" />
+      <property name="type" value="com.chuntung.plugin.mybatis.builder.generator.plugins.MapperAnnotationPlugin" />
+    </plugin>
+
+    <plugin type="com.chuntung.plugin.mybatis.builder.generator.plugins.DsqlRuntimePatchPlugin">
+      <property name="type" value="com.chuntung.plugin.mybatis.builder.generator.plugins.DsqlRuntimePatchPlugin" />
+    </plugin>
+
+    <commentGenerator type="com.chuntung.plugin.mybatis.builder.generator.CustomCommentGenerator">
+      <property name="addDatabaseRemark" value="true"/>
+      <property name="generatedComment" value="do not modify"/>
+    </commentGenerator>
+
+    <jdbcConnection driverClass="org.h2.Driver"
+        connectionURL="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
+        userId=""
+        password="">
+    </jdbcConnection>
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="true" />
+    </javaTypeResolver>
+
+    <!--
+    Support two variables which should be wrapped with ${}.
+    PROJECT_DIR: the project base path.
+    CURRENT_DIR: the configuration file path.
+    -->
+	<javaModelGenerator targetPackage="mybatis.builder.example.model" targetProject="${PROJECT_DIR}/src/test/java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <sqlMapGenerator targetPackage="sqlmap"  targetProject="${PROJECT_DIR}/src/test/resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="mybatis.builder.example.mapper" targetProject="${PROJECT_DIR}/src/test/java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+    <table tableName="user" domainObjectName="gene.User"
+           enableSelectByExample="false"
+           enableUpdateByExample="false"
+           enableCountByExample="false"
+           enableDeleteByExample="false" />
+  </context>
+</generatorConfiguration>

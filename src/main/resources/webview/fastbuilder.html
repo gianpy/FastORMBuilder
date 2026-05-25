@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastORM Builder</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        :root {
+            --bg: #2b2d30;
+            --surface: #3c3f41;
+            --surface2: #45484a;
+            --border: #4e5157;
+            --text: #bbb;
+            --bright: #e8e8e8;
+            --accent: #6366f1;
+            --accent-h: #818cf8;
+            --success: #4ade80;
+            --danger: #f87171;
+            --warn: #fbbf24
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 13px;
+            height: 100vh;
+            overflow: hidden
+        }
+
+        #root {
+            height: 100%;
+            display: flex;
+            flex-direction: column
+        }
+
+        button {
+            cursor: pointer;
+            font-size: 12px;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px
+        }
+
+        input, select {
+            padding: 5px 8px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--bright);
+            font-size: 12px;
+            width: 100%
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent)
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            color: var(--text);
+            margin-bottom: 3px
+        }
+
+        .btn {
+            background: var(--accent);
+            color: #fff
+        }
+
+        .btn:hover {
+            background: var(--accent-h)
+        }
+
+        .btn-s {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text)
+        }
+
+        .btn-s:hover {
+            background: var(--border)
+        }
+
+        .btn-d {
+            background: var(--danger);
+            color: #fff
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border)
+        }
+
+        .header h1 {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--bright);
+            flex: 1
+        }
+
+        .tabs {
+            display: flex;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border)
+        }
+
+        .tab {
+            padding: 7px 14px;
+            color: var(--text);
+            border-bottom: 2px solid transparent;
+            font-size: 12px;
+            cursor: pointer;
+            user-select: none
+        }
+
+        .tab:hover {
+            color: var(--bright)
+        }
+
+        .tab.active {
+            color: var(--bright);
+            border-bottom-color: var(--accent)
+        }
+
+        .content {
+            flex: 1;
+            overflow: auto;
+            padding: 12px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 10px
+        }
+
+        .card h3 {
+            font-size: 12px;
+            color: var(--bright);
+            margin-bottom: 8px;
+            font-weight: 600
+        }
+
+        .row {
+            display: flex;
+            gap: 8px
+        }
+
+        .row > * {
+            flex: 1
+        }
+
+        .fg {
+            margin-bottom: 8px
+        }
+
+        .conn-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            gap: 8px;
+            min-height: 36px
+        }
+
+        .conn-item:hover {
+            background: rgba(99, 102, 241, .1)
+        }
+
+        .conn-item.active {
+            border-left: 3px solid var(--accent);
+            background: rgba(99, 102, 241, .08)
+        }
+
+        .conn-item .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%
+        }
+
+        .conn-item .dot.on {
+            background: var(--success)
+        }
+
+        .conn-item .dot.off {
+            background: var(--danger)
+        }
+
+        .conn-item .name {
+            flex: 1;
+            color: var(--bright);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        .db-icon svg {
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        .conn-item .type {
+            font-size: 11px
+        }
+
+        .tree-item {
+            padding: 4px 8px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer
+        }
+
+        .tree-item:hover {
+            background: rgba(99, 102, 241, .08)
+        }
+
+        .tree-item.l1 {
+            padding-left: 16px
+        }
+
+        .tree-item.l2 {
+            padding-left: 32px
+        }
+
+        .tree-item input {
+            margin: 0
+        }
+
+        .status {
+            padding: 4px 12px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: var(--text)
+        }
+
+        .empty .ico {
+            font-size: 28px;
+            margin-bottom: 6px
+        }
+
+        .modal-bg {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100
+        }
+
+        .modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            width: 420px;
+            max-height: 80vh;
+            overflow-y: auto
+        }
+
+        .modal h2 {
+            font-size: 14px;
+            color: var(--bright);
+            margin-bottom: 12px
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 12px
+        }
+
+        .check {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px
+        }
+
+        .check input {
+            width: auto
+        }
+
+        .sep {
+            height: 1px;
+            background: var(--border);
+            margin: 10px 0
+        }
+
+        .sub-tabs {
+            display: flex;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px 6px 0 0;
+            overflow: hidden
+        }
+
+        .sub-tab {
+            padding: 7px 14px;
+            font-size: 12px;
+            cursor: pointer;
+            color: var(--text);
+            border-bottom: 2px solid transparent;
+            flex: 1;
+            text-align: center;
+            user-select: none
+        }
+
+        .sub-tab:hover {
+            color: var(--bright)
+        }
+
+        .sub-tab.active {
+            color: var(--bright);
+            background: var(--surface2);
+            border-bottom-color: var(--accent)
+        }
+
+        .sub-content {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            padding: 10px;
+            background: var(--surface)
+        }
+
+        .schema-group {
+            margin-bottom: 8px
+        }
+
+        .schema-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 8px;
+            font-size: 12px;
+            color: var(--bright);
+            background: var(--bg);
+            border-radius: 4px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            user-select: none
+        }
+
+        .schema-header:hover {
+            background: rgba(99, 102, 241, .08)
+        }
+
+        .fold-icon {
+            font-size: 9px;
+            color: var(--text);
+            width: 12px
+        }
+
+        .schema-count {
+            margin-left: auto;
+            font-size: 11px;
+            color: var(--text);
+            font-weight: normal
+        }
+
+        .table-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px 4px 24px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px
+        }
+
+        .table-row:hover {
+            background: rgba(99, 102, 241, .08)
+        }
+
+        .table-row input[type=checkbox] {
+            width: auto;
+            margin: 0
+        }
+
+        .table-name {
+            color: var(--bright)
+        }
+
+        .table-comment {
+            font-size: 11px;
+            color: var(--text);
+            margin-left: auto
+        }
+
+        .output-form {
+            padding: 4px 0
+        }
+
+        .pkg-history {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 4px
+        }
+
+        .pkg-chip {
+            background: rgba(99, 102, 241, .15);
+            color: var(--accent-h);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            cursor: pointer;
+            border: 1px solid rgba(99, 102, 241, .3)
+        }
+
+        .pkg-chip:hover {
+            background: rgba(99, 102, 241, .3)
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    const {useState, useEffect, useCallback} = React;
+
+    const DRIVERS = [
+        {id: 'MySQL', label: 'MySQL', fileBased: false, port: 3306},
+        {id: 'PostgreSQL', label: 'PostgreSQL', fileBased: false, port: 5432},
+        {id: 'Oracle_SID', label: 'Oracle SID', fileBased: false, port: 1521},
+        {id: 'Oracle_Service', label: 'Oracle Service', fileBased: false, port: 1521},
+        {id: 'MariaDB', label: 'MariaDB', fileBased: false, port: 3306},
+        {id: 'SQLite', label: 'SQLite', fileBased: true, port: 0},
+        {id: 'DuckDB', label: 'DuckDB', fileBased: true, port: 0},
+        {id: 'Custom', label: 'Custom', fileBased: false, port: 1234},
+    ];
+    const DB_ICONS = {
+        MySQL: '🐬', PostgreSQL: '🐘', Oracle_SID: '🔴', Oracle_Service: '🔴',
+        MariaDB: '🦭', SQLite: '🪶', DuckDB: '🦆', Custom: '🗄'
+    };
+    const driverIcon = (type) => {
+        const emoji = DB_ICONS[type] || DB_ICONS.Custom;
+        return <span
+            style={{fontSize: 18, lineHeight: '24px', width: 24, textAlign: 'center', flexShrink: 0}}>{emoji}</span>;
+    };
+    const RUNTIMES = ['MyBatis3DynamicSql', 'MyBatis3', 'MyBatis3Simple'];
+    const CLIENTS = ['XMLMAPPER', 'ANNOTATEDMAPPER', 'MIXEDMAPPER'];
+    const MODELS = ['FLAT', 'HIERARCHICAL', 'CONDITIONAL'];
+
+    function callIde(action, data) {
+        if (window.__fastbuilder_bridge) {
+            window.__fastbuilder_bridge.call(action, JSON.stringify(data || {}));
+        }
+    }
+
+    // --- App ---
+    function App() {
+        const [tab, setTab] = useState('connections');
+        const [connections, setConnections] = useState([]);
+        const [schemas, setSchemas] = useState([]);
+        const [selectedTables, setSelectedTables] = useState([]);
+        const [editConn, setEditConn] = useState(null);
+        const [showSettings, setShowSettings] = useState(false);
+        const [status, setStatus] = useState('Ready');
+        const [connStatus, setConnStatus] = useState('No connection');
+        const [activeConnId, setActiveConnId] = useState(null);
+        const [defaults, setDefaults] = useState({
+            targetRuntime: 'MyBatis3DynamicSql',
+            clientType: 'XMLMAPPER',
+            modelType: 'FLAT',
+            encoding: 'UTF-8',
+            comment: '',
+            forceBigDecimals: false,
+            useJSR310: true,
+            useLombok: false,
+            historySize: 20
+        });
+        const [genParams, setGenParams] = useState({
+            mode: 'mybatis',
+            modelPkg: '',
+            mapperPkg: '',
+            xmlPkg: '',
+            runtime: 'MyBatis3DynamicSql',
+            client: 'XMLMAPPER',
+            lombok: false
+        });
+        const [pkgHistory, setPkgHistory] = useState({modelPkgs: [], mapperPkgs: [], xmlPkgs: []});
+        const [history, setHistory] = useState([]);
+        const [overwriteFiles, setOverwriteFiles] = useState(null);
+
+        // Expose to Java bridge
+        useEffect(() => {
+            window.updateConnections = (c) => {
+                setConnections(c);
+                setStatus('Connections loaded');
+            };
+            window.updateSchemas = (s) => {
+                setSchemas(s);
+            };
+            window.updateHistory = (h) => {
+                setHistory(h);
+            };
+            window.updateDefaults = (d) => {
+                setDefaults(prev => ({...prev, ...d}));
+            };
+            window.updatePkgHistory = (h) => {
+                setPkgHistory(h);
+            };
+            window.setStatus = (s) => setStatus(s);
+            window.setConnectionStatus = (s) => setConnStatus(s);
+            window.confirmOverwrite = (fileList) => setOverwriteFiles(fileList);
+        }, []);
+
+        const toggleTable = (schema, table) => {
+            const key = schema + '.' + table;
+            setSelectedTables(prev => prev.includes(key) ? prev.filter(t => t !== key) : [...prev, key]);
+        };
+
+        const doGenerate = () => {
+            if (selectedTables.length === 0) {
+                setStatus('Select at least one table');
+                return;
+            }
+            callIde('generate', {...genParams, tables: selectedTables});
+            setStatus('Generating...');
+        };
+
+        const doGenerateOverwrite = () => {
+            setOverwriteFiles(null);
+            callIde('generate', {...genParams, tables: selectedTables, overwrite: true});
+            setStatus('Generating (overwrite)...');
+        };
+
+        const doTestConnection = (conn) => {
+            callIde('testConnection', conn);
+        };
+
+        const doSaveConnection = (conn) => {
+            callIde('saveConnection', conn);
+            setEditConn(null);
+            setStatus('Connection saved');
+        };
+
+        const doDeleteConnection = (id) => {
+            callIde('deleteConnection', {id});
+            setConnections(prev => prev.filter(c => c.id !== id));
+        };
+
+        const doConnect = (id) => {
+            callIde('connect', {id});
+            setActiveConnId(id);
+            setConnStatus('Connecting...');
+            setTab('generate');
+        };
+
+        const doSaveDefaults = () => {
+            callIde('saveDefaults', defaults);
+            setShowSettings(false);
+            setStatus('Settings saved');
+        };
+
+        return (
+            <>
+                <div className="header">
+                    <h1>⚡ FastORM Builder</h1>
+                    <button className="btn" onClick={() => setShowSettings(true)}
+                            style={{fontSize: 11, padding: '3px 8px'}}>⚙ Settings
+                    </button>
+                </div>
+                <div className="tabs">
+                    {['connections', 'generate', 'history'].map(t => (
+                        <div key={t} className={`tab ${tab === t ? 'active' : ''}`}
+                             onClick={() => setTab(t)}>{t.charAt(0).toUpperCase() + t.slice(1)}</div>
+                    ))}
+                </div>
+                <div className="content">
+                    {tab === 'connections' &&
+                        <ConnectionsPanel connections={connections} activeConnId={activeConnId} onEdit={setEditConn}
+                                          onConnect={doConnect}
+                                          onDelete={doDeleteConnection} onAdd={() => setEditConn({
+                            id: '',
+                            name: 'New Connection',
+                            driverType: 'MySQL',
+                            host: 'localhost',
+                            port: 3306,
+                            database: '',
+                            userName: '',
+                            password: '',
+                            active: true,
+                            targetRuntime: '',
+                            clientType: '',
+                            modelType: '',
+                            useLombok: false
+                        })}/>}
+                    {tab === 'generate' &&
+                        <GeneratePanel schemas={schemas} selectedTables={selectedTables} toggleTable={toggleTable}
+                                       genParams={genParams} setGenParams={setGenParams} onGenerate={doGenerate}
+                                       pkgHistory={pkgHistory} overwriteFiles={overwriteFiles}
+                                       setOverwriteFiles={setOverwriteFiles}
+                                       doGenerateOverwrite={doGenerateOverwrite}/>}
+                    {tab === 'history' && <HistoryPanel history={history}/>}
+                </div>
+                <div className="status"><span>{status}</span><span>{connStatus}</span></div>
+                {editConn && <ConnectionModal conn={editConn} onSave={doSaveConnection} onTest={doTestConnection}
+                                              onClose={() => setEditConn(null)}/>}
+                {showSettings && <SettingsModal defaults={defaults} setDefaults={setDefaults} onSave={doSaveDefaults}
+                                                onClose={() => setShowSettings(false)}/>}
+            </>
+        );
+    }
+
+    // --- Connections Panel ---
+    function ConnectionsPanel({connections, activeConnId, onEdit, onConnect, onDelete, onAdd}) {
+        if (!connections.length) return (
+            <div className="empty">
+                <div className="ico">🔌</div>
+                <p>No connections configured</p>
+                <button className="btn" style={{marginTop: 8}} onClick={onAdd}>+ Add Connection</button>
+            </div>
+        );
+        return (
+            <>
+                <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: 8}}>
+                    <span style={{color: 'var(--bright)', fontSize: 12}}>Database Connections</span>
+                    <button className="btn" onClick={onAdd}>+ Add</button>
+                </div>
+                {connections.map(c => (
+                    <div key={c.id} className={`conn-item ${c.id === activeConnId ? 'active' : ''}`}>
+                        {driverIcon(c.driverType)}
+                        <span className="name">{c.name}</span>
+                        <span className="type">{c.driverType}</span>
+                        <button className="btn" style={{padding: '2px 8px', fontSize: 11}}
+                                onClick={() => onConnect(c.id)}>▶ Connect
+                        </button>
+                        <button className="btn-s" style={{padding: '2px 6px'}} onClick={() => onEdit(c)}>✎</button>
+                        <button className="btn-d" style={{padding: '2px 6px'}} onClick={() => onDelete(c.id)}>✕</button>
+                    </div>
+                ))}
+            </>
+        );
+    }
+
+    // --- Generate Panel ---
+    function GeneratePanel({
+                               schemas,
+                               selectedTables,
+                               toggleTable,
+                               genParams,
+                               setGenParams,
+                               onGenerate,
+                               pkgHistory,
+                               overwriteFiles,
+                               setOverwriteFiles,
+                               doGenerateOverwrite
+                           }) {
+        const [subTab, setSubTab] = useState('tables');
+        const [collapsed, setCollapsed] = useState({});
+        const upd = (k, v) => setGenParams(p => ({...p, [k]: v}));
+        const toggleCollapse = (name) => setCollapsed(p => ({...p, [name]: !p[name]}));
+
+        // Start schemas folded except the first one
+        useEffect(() => {
+            if (schemas.length) {
+                setCollapsed(prev => {
+                    const next = {...prev};
+                    schemas.forEach((s, i) => {
+                        if (!(s.name in next)) next[s.name] = i > 0;
+                    });
+                    return next;
+                });
+            }
+        }, [schemas]);
+        const JAVA_ORMS = ['MyBatis', 'JPA', 'Hibernate', 'YORM'];
+        const JS_ORMS = ['Sequelize', 'Knex.js', 'Prisma', 'TypeORM', 'Bookshelf.js', 'Waterline', 'Objection.js', 'MikroORM'];
+        const isJs = genParams.lang === 'js';
+
+        return (
+            <div style={{display: 'flex', flexDirection: 'column', flex: 1, overflow: 'hidden'}}>
+                <div style={{display: 'flex', gap: 4, padding: '4px 0', flexShrink: 0, alignItems: 'center'}}>
+                    <button className={`btn ${!isJs ? '' : 'btn-s'}`} style={{padding: '3px 8px', fontSize: 11}}
+                            onClick={() => {
+                                upd('lang', 'java');
+                                upd('mode', 'mybatis');
+                            }}>☕ Java
+                    </button>
+                    <button className={`btn ${isJs ? '' : 'btn-s'}`} style={{padding: '3px 8px', fontSize: 11}}
+                            onClick={() => {
+                                upd('lang', 'js');
+                                upd('mode', 'sequelize');
+                            }}>⬡ JS
+                    </button>
+                    <select value={genParams.mode} onChange={e => upd('mode', e.target.value)}
+                            style={{
+                                padding: '3px 6px',
+                                background: 'var(--surface2)',
+                                color: 'var(--bright)',
+                                border: '1px solid var(--border)',
+                                borderRadius: 4,
+                                fontSize: 11,
+                                flex: 1,
+                                minWidth: 0
+                            }}>
+                        {(!isJs ? JAVA_ORMS : JS_ORMS).map(o => (
+                            <option key={o} value={o.toLowerCase().replace(/[.\s]/g, '')}>{o}</option>
+                        ))}
+                    </select>
+                    {isJs && (
+                        <select value={genParams.typescript ? 'ts' : 'js'}
+                                onChange={e => upd('typescript', e.target.value === 'ts')}
+                                style={{
+                                    padding: '3px 6px',
+                                    background: 'var(--surface2)',
+                                    color: 'var(--bright)',
+                                    border: '1px solid var(--border)',
+                                    borderRadius: 4,
+                                    fontSize: 11,
+                                    width: 52
+                                }}>
+                            <option value="js">JS</option>
+                            <option value="ts">TS</option>
+                        </select>
+                    )}
+                </div>
+                <div className="sub-tabs">
+                    <div className={`sub-tab ${subTab === 'tables' ? 'active' : ''}`}
+                         onClick={() => setSubTab('tables')}>📋 Tables ({selectedTables.length})
+                    </div>
+                    <div className={`sub-tab ${subTab === 'output' ? 'active' : ''}`}
+                         onClick={() => setSubTab('output')}>⚙ Output Settings
+                    </div>
+                </div>
+                <div className="sub-content">
+                    {overwriteFiles ? (
+                        <div style={{padding: 12}}>
+                            <h3 style={{margin: '0 0 8px'}}>⚠ Files already exist</h3>
+                            <p style={{fontSize: 12, margin: '4px 0'}}>The following files will be overwritten:</p>
+                            <div style={{
+                                background: 'var(--bg)',
+                                padding: 8,
+                                borderRadius: 4,
+                                fontSize: 11,
+                                maxHeight: 150,
+                                overflow: 'auto',
+                                margin: '8px 0'
+                            }}>
+                                {overwriteFiles.split(', ').map(f => <div key={f}>• {f}</div>)}
+                            </div>
+                            <p style={{fontSize: 12, margin: '8px 0'}}>Do you want to overwrite?</p>
+                            <div style={{display: 'flex', gap: 8, marginTop: 12}}>
+                                <button className="btn btn-s" onClick={() => setOverwriteFiles(null)}>Cancel</button>
+                                <button className="btn" onClick={doGenerateOverwrite}>Overwrite</button>
+                            </div>
+                        </div>
+                    ) : (<>
+                        {subTab === 'tables' && (
+                            !schemas.length ? <div className="empty">
+                                    <div className="ico">📋</div>
+                                    <p>Connect to a database to see tables</p></div> :
+                                <div className="table-tree">
+                                    {schemas.map(s => (
+                                        <div key={s.name} className="schema-group">
+                                            <div className="schema-header" onClick={() => toggleCollapse(s.name)}>
+                                                <span className="fold-icon">{collapsed[s.name] ? '▶' : '▼'}</span>
+                                                <span>🗄</span><strong>{s.name}</strong>
+                                                <span className="schema-count">{(s.tables || []).length} tables</span>
+                                            </div>
+                                            {!collapsed[s.name] && (s.tables || []).map(t => (
+                                                <div key={t.name} className="table-row"
+                                                     onClick={() => toggleTable(s.name, t.name)}>
+                                                    <input type="checkbox"
+                                                           checked={selectedTables.includes(s.name + '.' + t.name)}
+                                                           readOnly/>
+                                                    <span className="table-name">{t.name}</span>
+                                                    {t.comment && <span className="table-comment">{t.comment}</span>}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ))}
+                                </div>
+                        )}
+                        {subTab === 'output' && genParams.mode === 'mybatis' && (
+                            <div className="output-form">
+                                <div className="row">
+                                    <div className="fg"><label>Model Package</label><input value={genParams.modelPkg}
+                                                                                           onChange={e => upd('modelPkg', e.target.value)}
+                                                                                           placeholder="com.example.model"/>
+                                        {pkgHistory.modelPkgs && pkgHistory.modelPkgs.length > 0 &&
+                                            <div className="pkg-history">{pkgHistory.modelPkgs.map(p => <span key={p}
+                                                                                                              className="pkg-chip"
+                                                                                                              onClick={() => upd('modelPkg', p)}>{p}</span>)}</div>}
+                                    </div>
+                                    <div className="fg"><label>Mapper Package</label><input value={genParams.mapperPkg}
+                                                                                            onChange={e => upd('mapperPkg', e.target.value)}
+                                                                                            placeholder="com.example.mapper"/>
+                                        {pkgHistory.mapperPkgs && pkgHistory.mapperPkgs.length > 0 &&
+                                            <div className="pkg-history">{pkgHistory.mapperPkgs.map(p => <span key={p}
+                                                                                                               className="pkg-chip"
+                                                                                                               onClick={() => upd('mapperPkg', p)}>{p}</span>)}</div>}
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="fg"><label>XML Package</label><input value={genParams.xmlPkg}
+                                                                                         onChange={e => upd('xmlPkg', e.target.value)}
+                                                                                         placeholder="mapper"/>
+                                        {pkgHistory.xmlPkgs && pkgHistory.xmlPkgs.length > 0 &&
+                                            <div className="pkg-history">{pkgHistory.xmlPkgs.map(p => <span key={p}
+                                                                                                            className="pkg-chip"
+                                                                                                            onClick={() => upd('xmlPkg', p)}>{p}</span>)}</div>}
+                                    </div>
+                                    <div className="fg"><label>Runtime</label><select value={genParams.runtime}
+                                                                                      onChange={e => upd('runtime', e.target.value)}>{RUNTIMES.map(r =>
+                                        <option key={r}>{r}</option>)}</select></div>
+                                </div>
+                                <div className="row">
+                                    <div className="fg"><label>Client Type</label><select value={genParams.client}
+                                                                                          onChange={e => upd('client', e.target.value)}>{CLIENTS.map(c =>
+                                        <option key={c}>{c}</option>)}</select></div>
+                                    <div className="fg"><label>&nbsp;</label>
+                                        <div className="check"><input type="checkbox" checked={genParams.lombok}
+                                                                      onChange={e => upd('lombok', e.target.checked)}/><span>Use Lombok</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        {subTab === 'output' && genParams.mode === 'jpa' && (
+                            <div className="output-form">
+                                <div className="row">
+                                    <div className="fg"><label>Entity Package</label><input value={genParams.modelPkg}
+                                                                                            onChange={e => upd('modelPkg', e.target.value)}
+                                                                                            placeholder="com.example.entity"/>
+                                        {pkgHistory.modelPkgs && pkgHistory.modelPkgs.length > 0 &&
+                                            <div className="pkg-history">{pkgHistory.modelPkgs.map(p => <span key={p}
+                                                                                                              className="pkg-chip"
+                                                                                                              onClick={() => upd('modelPkg', p)}>{p}</span>)}</div>}
+                                    </div>
+                                    <div className="fg"><label>Repository Package</label><input
+                                        value={genParams.mapperPkg}
+                                        onChange={e => upd('mapperPkg', e.target.value)}
+                                        placeholder="com.example.repository"/>
+                                        {pkgHistory.mapperPkgs && pkgHistory.mapperPkgs.length > 0 &&
+                                            <div className="pkg-history">{pkgHistory.mapperPkgs.map(p => <span key={p}
+                                                                                                               className="pkg-chip"
+                                                                                                               onClick={() => upd('mapperPkg', p)}>{p}</span>)}</div>}
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="fg"><label>&nbsp;</label>
+                                        <div className="check"><input type="checkbox" checked={genParams.lombok}
+                                                                      onChange={e => upd('lombok', e.target.checked)}/><span>Use Lombok</span>
+                                        </div>
+                                    </div>
+                                    <div className="fg"><label>&nbsp;</label>
+                                        <div className="check"><input type="checkbox"
+                                                                      checked={genParams.jpaRelations || false}
+                                                                      onChange={e => upd('jpaRelations', e.target.checked)}/><span>Generate Relations</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        {subTab === 'output' && genParams.mode === 'hibernate' && (
+                            <div className="output-form">
+                                <div className="row">
+                                    <div className="fg"><label>Entity Package</label><input value={genParams.modelPkg}
+                                                                                            onChange={e => upd('modelPkg', e.target.value)}
+                                                                                            placeholder="com.example.entity"/>
+                                        {pkgHistory.modelPkgs && pkgHistory.modelPkgs.length > 0 &&
+                                            <div className="pkg-history">{pkgHistory.modelPkgs.map(p => <span key={p}
+                                                                                                              className="pkg-chip"
+                                                                                                              onClick={() => upd('modelPkg', p)}>{p}</span>)}</div>}
+                                    </div>
+                                    <div className="fg"><label>DAO Package</label><input value={genParams.mapperPkg}
+                                                                                         onChange={e => upd('mapperPkg', e.target.value)}
+                                                                                         placeholder="com.example.dao"/>
+                                        {pkgHistory.mapperPkgs && pkgHistory.mapperPkgs.length > 0 &&
+                                            <div className="pkg-history">{pkgHistory.mapperPkgs.map(p => <span key={p}
+                                                                                                               className="pkg-chip"
+                                                                                                               onClick={() => upd('mapperPkg', p)}>{p}</span>)}</div>}
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="fg"><label>&nbsp;</label>
+                                        <div className="check"><input type="checkbox" checked={genParams.lombok}
+                                                                      onChange={e => upd('lombok', e.target.checked)}/><span>Use Lombok</span>
+                                        </div>
+                                    </div>
+                                    <div className="fg"><label>&nbsp;</label>
+                                        <div className="check"><input type="checkbox"
+                                                                      checked={genParams.hbmXml || false}
+                                                                      onChange={e => upd('hbmXml', e.target.checked)}/><span>Generate .hbm.xml</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="fg"><label>&nbsp;</label>
+                                        <div className="check"><input type="checkbox"
+                                                                      checked={genParams.jpaRelations || false}
+                                                                      onChange={e => upd('jpaRelations', e.target.checked)}/><span>Generate Relations</span>
+                                        </div>
+                                    </div>
+                                    <div className="fg"><label>&nbsp;</label>
+                                        <div className="check"><input type="checkbox"
+                                                                      checked={genParams.hibernateCfg || false}
+                                                                      onChange={e => upd('hibernateCfg', e.target.checked)}/><span>Generate hibernate.cfg.xml</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        {subTab === 'output' && genParams.mode === 'yorm' && (
+                            <div className="output-form">
+                                <div className="row">
+                                    <div className="fg"><label>Record Package</label><input value={genParams.modelPkg}
+                                                                                            onChange={e => upd('modelPkg', e.target.value)}
+                                                                                            placeholder="com.example.record"/>
+                                        {pkgHistory.modelPkgs && pkgHistory.modelPkgs.length > 0 &&
+                                            <div className="pkg-history">{pkgHistory.modelPkgs.map(p => <span key={p}
+                                                                                                              className="pkg-chip"
+                                                                                                              onClick={() => upd('modelPkg', p)}>{p}</span>)}</div>}
+                                    </div>
+                                </div>
+                                <p style={{fontSize: 11, color: 'var(--text)', marginTop: 8}}>
+                                    YORM uses Java Records with convention-based mapping (no annotations).
+                                    Fields use camelCase, PK is assumed to be "id" with auto-increment.
+                                </p>
+                            </div>
+                        )}
+                        {subTab === 'output' && isJs && (
+                            <div className="output-form">
+                                <div className="row">
+                                    <div className="fg"><label>Output Directory</label><input value={genParams.modelPkg}
+                                                                                              onChange={e => upd('modelPkg', e.target.value)}
+                                                                                              placeholder="src/models"/>
+                                        {pkgHistory.modelPkgs && pkgHistory.modelPkgs.length > 0 &&
+                                            <div className="pkg-history">{pkgHistory.modelPkgs.map(p => <span key={p}
+                                                                                                              className="pkg-chip"
+                                                                                                              onClick={() => upd('modelPkg', p)}>{p}</span>)}</div>}
+                                    </div>
+                                </div>
+                                <p style={{fontSize: 11, color: 'var(--text)', marginTop: 8}}>
+                                    Generates model definitions for the selected JavaScript ORM framework.
+                                    {genParams.mode === 'prisma' && ' Output is a schema.prisma file.'}
+                                    {genParams.mode === 'knexjs' && ' Output is a migration file.'}
+                                </p>
+                            </div>
+                        )}
+                    </>)}
+                </div>
+                {!overwriteFiles && (
+                    <div style={{padding: '8px 0', flexShrink: 0}}>
+                        <button className="btn" onClick={onGenerate}>⚡ Generate ({selectedTables.length} tables)
+                        </button>
+                    </div>
+                )}
+            </div>
+        );
+    }
+
+    // --- History Panel ---
+    function HistoryPanel({history}) {
+        const [collapsed, setCollapsed] = useState({});
+        if (!history.length) return <div className="empty">
+            <div className="ico">📜</div>
+            <p>Generation history will appear here</p></div>;
+
+        // Group by date + HH:mm
+        const groups = {};
+        history.forEach(h => {
+            const ts = h.date ? h.date.substring(0, 16) : 'Unknown';
+            if (!groups[ts]) groups[ts] = [];
+            groups[ts].push(h);
+        });
+
+        const toggle = (k) => setCollapsed(p => ({...p, [k]: !p[k]}));
+        const regenerateTable = (h, table) => {
+            callIde('generate', {
+                modelPkg: h.modelPkg || '',
+                mapperPkg: h.mapperPkg || '',
+                xmlPkg: h.xmlPkg || '',
+                runtime: h.runtime || '',
+                tables: [table]
+            });
+        };
+
+        return Object.entries(groups).map(([ts, items]) => (
+            <div key={ts} className="schema-group">
+                <div className="schema-header" onClick={() => toggle(ts)}>
+                    <span className="fold-icon">{collapsed[ts] ? '▶' : '▼'}</span>
+                    <span>🕐</span><strong>{ts}</strong>
+                    <span
+                        className="schema-count">{items.reduce((n, h) => n + (h.tables?.length || 0), 0)} table(s)</span>
+                </div>
+                {!collapsed[ts] && items.map((h, i) => (
+                    <div key={i}>
+                        {(h.tables || []).map((t, j) => (
+                            <div key={j} className="table-row"
+                                 style={{display: 'flex', alignItems: 'center', padding: '3px 8px 3px 20px', gap: 6}}>
+                                {driverIcon(h.driverType)}
+                                <span style={{flex: 1, fontSize: 12, color: 'var(--bright)'}}>{t}</span>
+                                <span style={{
+                                    fontSize: 10,
+                                    color: 'var(--text)',
+                                    maxWidth: 90,
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'nowrap'
+                                }}>{h.modelPkg}</span>
+                                <button className="btn" style={{padding: '1px 5px', fontSize: 9}}
+                                        onClick={() => regenerateTable(h, t)}>↻
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+        ));
+    }
+
+    // --- Connection Modal ---
+    function ConnectionModal({conn, onSave, onTest, onClose}) {
+        const [form, setForm] = useState({...conn});
+        const upd = (k, v) => setForm(p => ({...p, [k]: v}));
+        const driver = DRIVERS.find(d => d.id === form.driverType) || DRIVERS[0];
+
+        const onDriverChange = (id) => {
+            const d = DRIVERS.find(x => x.id === id);
+            upd('driverType', id);
+            if (d) setForm(p => ({...p, driverType: id, port: d.port}));
+        };
+
+        return (
+            <div className="modal-bg" onClick={onClose}>
+                <div className="modal" onClick={e => e.stopPropagation()}>
+                    <h2>{conn.id ? 'Edit Connection' : 'New Connection'}</h2>
+                    <div className="fg"><label>Name</label><input value={form.name}
+                                                                  onChange={e => upd('name', e.target.value)}/></div>
+                    <div className="fg"><label>Driver</label><select value={form.driverType}
+                                                                     onChange={e => onDriverChange(e.target.value)}>{DRIVERS.map(d =>
+                        <option key={d.id} value={d.id}>{d.label}</option>)}</select></div>
+                    {!driver.fileBased && <>
+                        <div className="row">
+                            <div className="fg"><label>Host</label><input value={form.host || ''}
+                                                                          onChange={e => upd('host', e.target.value)}/>
+                            </div>
+                            <div className="fg" style={{maxWidth: 80}}><label>Port</label><input type="number"
+                                                                                                 value={form.port || ''}
+                                                                                                 onChange={e => upd('port', parseInt(e.target.value) || 0)}/>
+                            </div>
+                        </div>
+                        <div className="fg">
+                            <label>{form.driverType === 'Oracle_SID' ? 'SID' : form.driverType === 'Oracle_Service' ? 'Service Name' : 'Database'}</label><input
+                            value={form.database || ''} onChange={e => upd('database', e.target.value)}/></div>
+                    </>}
+                    {driver.fileBased && <div className="fg"><label>File Path</label><input value={form.database || ''}
+                                                                                            onChange={e => upd('database', e.target.value)}
+                                                                                            placeholder="/path/to/db.sqlite"/>
+                    </div>}
+                    <div className="row">
+                        <div className="fg"><label>User</label><input value={form.userName || ''}
+                                                                      onChange={e => upd('userName', e.target.value)}/>
+                        </div>
+                        <div className="fg"><label>Password</label><input type="password" value={form.password || ''}
+                                                                          onChange={e => upd('password', e.target.value)}/>
+                        </div>
+                    </div>
+                    <div className="check"><input type="checkbox" checked={form.active !== false}
+                                                  onChange={e => upd('active', e.target.checked)}/><span>Active</span>
+                    </div>
+                    <div className="sep"/>
+                    <h3 style={{fontSize: 12, color: 'var(--bright)', marginBottom: 8}}>Generation Overrides</h3>
+                    <div className="row">
+                        <div className="fg"><label>Runtime</label><select value={form.targetRuntime || ''}
+                                                                          onChange={e => upd('targetRuntime', e.target.value)}>
+                            <option value="">Default</option>
+                            {RUNTIMES.map(r => <option key={r}>{r}</option>)}</select></div>
+                        <div className="fg"><label>Client</label><select value={form.clientType || ''}
+                                                                         onChange={e => upd('clientType', e.target.value)}>
+                            <option value="">Default</option>
+                            {CLIENTS.map(c => <option key={c}>{c}</option>)}</select></div>
+                    </div>
+                    <div className="row">
+                        <div className="fg"><label>Model</label><select value={form.modelType || ''}
+                                                                        onChange={e => upd('modelType', e.target.value)}>
+                            <option value="">Default</option>
+                            {MODELS.map(m => <option key={m}>{m}</option>)}</select></div>
+                        <div className="fg"><label>&nbsp;</label>
+                            <div className="check"><input type="checkbox" checked={form.useLombok || false}
+                                                          onChange={e => upd('useLombok', e.target.checked)}/><span>Lombok</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal-actions">
+                        <button className="btn-s" onClick={() => onTest(form)}>Test</button>
+                        <button className="btn-s" onClick={onClose}>Cancel</button>
+                        <button className="btn" onClick={() => onSave(form)}>Save</button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // --- Settings Modal ---
+    function SettingsModal({defaults, setDefaults, onSave, onClose}) {
+        const upd = (k, v) => setDefaults(p => ({...p, [k]: v}));
+        return (
+            <div className="modal-bg" onClick={onClose}>
+                <div className="modal" onClick={e => e.stopPropagation()}>
+                    <h2>Global Settings</h2>
+                    <div className="row">
+                        <div className="fg"><label>Target Runtime</label><select value={defaults.targetRuntime}
+                                                                                 onChange={e => upd('targetRuntime', e.target.value)}>{RUNTIMES.map(r =>
+                            <option key={r}>{r}</option>)}</select></div>
+                        <div className="fg"><label>Client Type</label><select value={defaults.clientType}
+                                                                              onChange={e => upd('clientType', e.target.value)}>{CLIENTS.map(c =>
+                            <option key={c}>{c}</option>)}</select></div>
+                    </div>
+                    <div className="row">
+                        <div className="fg"><label>Model Type</label><select value={defaults.modelType}
+                                                                             onChange={e => upd('modelType', e.target.value)}>{MODELS.map(m =>
+                            <option key={m}>{m}</option>)}</select></div>
+                        <div className="fg"><label>Encoding</label><input value={defaults.encoding}
+                                                                          onChange={e => upd('encoding', e.target.value)}/>
+                        </div>
+                    </div>
+                    <div className="fg"><label>Generated Comment</label><input value={defaults.comment}
+                                                                               onChange={e => upd('comment', e.target.value)}
+                                                                               placeholder="Auto-generated by FastORM Builder"/>
+                    </div>
+                    <div className="check"><input type="checkbox" checked={defaults.forceBigDecimals}
+                                                  onChange={e => upd('forceBigDecimals', e.target.checked)}/><span>Force BigDecimals</span>
+                    </div>
+                    <div className="check"><input type="checkbox" checked={defaults.useJSR310}
+                                                  onChange={e => upd('useJSR310', e.target.checked)}/><span>Use JSR-310 Date Types</span>
+                    </div>
+                    <div className="check"><input type="checkbox" checked={defaults.useLombok}
+                                                  onChange={e => upd('useLombok', e.target.checked)}/><span>Use Lombok</span>
+                    </div>
+                    <div className="fg"><label>History Size</label><input type="number" value={defaults.historySize}
+                                                                          onChange={e => upd('historySize', parseInt(e.target.value) || 20)}
+                                                                          style={{width: 60}}/></div>
+                    <div className="modal-actions">
+                        <button className="btn-s" onClick={onClose}>Cancel</button>
+                        <button className="btn" onClick={onSave}>Save</button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

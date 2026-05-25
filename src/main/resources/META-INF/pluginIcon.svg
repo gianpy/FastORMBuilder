@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+    <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#6366f1"/>
+            <stop offset="100%" style="stop-color:#8b5cf6"/>
+        </linearGradient>
+    </defs>
+    <!-- Background -->
+    <rect width="40" height="40" rx="8" fill="url(#bg)"/>
+    <!-- Hummingbird body -->
+    <ellipse cx="18" cy="18" rx="7" ry="5.5" fill="#4ade80" transform="rotate(-20 18 18)"/>
+    <!-- Head -->
+    <circle cx="23" cy="13" r="4" fill="#22c55e"/>
+    <!-- Green mask/band across eyes -->
+    <rect x="19" y="11.5" width="8" height="3" rx="1.5" fill="#166534" opacity="0.9"/>
+    <!-- Eye -->
+    <circle cx="24.5" cy="13" r="1.2" fill="white"/>
+    <circle cx="24.8" cy="12.8" r="0.5" fill="#1e293b"/>
+    <!-- Beak -->
+    <path d="M27 13 L33 11.5 L27 12.5" fill="#f59e0b" stroke="#d97706" stroke-width="0.3"/>
+    <!-- Wing -->
+    <path d="M14 16 Q8 10 10 6 Q14 9 16 14 Z" fill="#86efac" opacity="0.85"/>
+    <path d="M13 18 Q6 14 7 9 Q12 12 15 16 Z" fill="#4ade80" opacity="0.7"/>
+    <!-- Tail -->
+    <path d="M11 21 Q7 25 5 28 Q8 25 12 22 Z" fill="#22c55e" opacity="0.8"/>
+    <path d="M12 22 Q9 27 8 30 Q10 26 13 23 Z" fill="#16a34a" opacity="0.7"/>
+    <!-- Lightning bolt crossing through bird with transparency -->
+    <path d="M20 3 L12 17 L18 17 L10 33" fill="none" stroke="#fbbf24" stroke-width="3.2" stroke-linecap="round"
+          stroke-linejoin="round" opacity="0.7"/>
+    <path d="M20 3 L12 17 L18 17 L10 33" fill="none" stroke="white" stroke-width="1.2" stroke-linecap="round"
+          stroke-linejoin="round" opacity="0.35"/>
+    <!-- Text -->
+    <text x="20" y="38" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="4.5" fill="white"
+          opacity="0.85">FastBuilder
+    </text>
+</svg>

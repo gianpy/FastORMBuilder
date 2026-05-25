@@ -1,0 +1,23 @@
+<idea-plugin>
+    <actions>
+        <!-- New Config File (requires Java project structure) -->
+        <action id="FastORMBuilder.NewConfig"
+                class="org.fastormbuilder.plugin.action.NewGeneratorConfigAction">
+            <add-to-group group-id="NewGroup" relative-to-action="NewFromTemplate" anchor="after"/>
+        </action>
+
+        <!-- Run Generator popup menu (requires Java) -->
+        <group id="ProjectViewPopupMenuFastORMBuilderGroup">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="before"
+                          relative-to-action="ProjectViewPopupMenuRunGroup"/>
+            <action id="FastORMBuilder.RunGenerator" text="Run MyBatis Generator" icon="/icons/fastBuilderAction.svg"
+                    description="Run MyBatis Generator with selected configuration file"
+                    class="org.fastormbuilder.plugin.action.RunGeneratorAction"/>
+        </group>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- file template provider (Java templates) -->
+        <fileTemplateGroup implementation="org.fastormbuilder.plugin.FastBuilderTemplateProvider"/>
+    </extensions>
+</idea-plugin>

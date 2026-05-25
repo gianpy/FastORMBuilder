@@ -1,0 +1,13 @@
+<b>0.9.0</b>
+<ul>
+  <li>Rebranded to FastORM Builder</li>
+  <li>Multi-IDE support: works in IntelliJ IDEA, WebStorm, PhpStorm, PyCharm, and all JetBrains IDEs (2024.1+)</li>
+  <li>Language selector: Java / JavaScript with dedicated ORM dropdown</li>
+  <li>Java ORMs: MyBatis, JPA, Hibernate, YORM</li>
+  <li>JavaScript ORMs: Sequelize, Knex.js, Prisma, TypeORM, Bookshelf.js, Waterline, Objection.js, MikroORM</li>
+  <li>JS/TS output toggle for all JavaScript ORM generators</li>
+  <li>Overwrite protection: warns before overwriting existing generated files</li>
+  <li>Improved UI: larger database icons, connection name ellipsis, compact layout</li>
+  <li>Java-specific features (MyBatis Generator, file templates) load only when Java plugin is available</li>
+  <li>Package restructured to org.fastormbuilder.plugin</li>
+</ul>

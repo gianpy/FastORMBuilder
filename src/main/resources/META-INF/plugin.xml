@@ -1,0 +1,83 @@
+<idea-plugin>
+    <id>org.fastormbuilder.plugin</id>
+    <name>FastORM Builder</name>
+    <version>0.9.0</version>
+    <vendor>Gianpy</vendor>
+
+    <description><![CDATA[
+    <b>FastORM Builder</b> — The fastest way to go from database schema to production-ready ORM code.
+    <br><br>
+    Powered by a fully embedded web UI (JCEF) — connections, settings, and generation all in one fluid interface.
+    <br><br>
+    Supports <b>12 ORM frameworks</b> across Java and JavaScript/TypeScript:
+    <br>
+    <b>Java:</b> MyBatis, JPA, Hibernate, YORM
+    <br>
+    <b>JS/TS:</b> Sequelize, Knex.js, Prisma, TypeORM, Bookshelf.js, Waterline, Objection.js, MikroORM
+    <br><br>
+    Works in <b>all JetBrains IDEs</b> — IntelliJ IDEA, WebStorm, PhpStorm, PyCharm, and more.
+    <br><br>
+    <b>Supported Databases:</b> MySQL, PostgreSQL, MariaDB, Oracle, SQLite, DuckDB.
+    <br><br>
+    <b>Key Features:</b>
+    <ul>
+      <li>🌐 Modern embedded web UI — no legacy dialogs</li>
+      <li>⚡ One-click code generation from database tables</li>
+      <li>🔄 Language selector: Java / JavaScript with ORM dropdown</li>
+      <li>📝 JS/TS output toggle for all JavaScript ORM generators</li>
+      <li>⚠️ Overwrite protection — warns before replacing existing files</li>
+      <li>🏗️ JPA/Hibernate relationship detection from foreign keys</li>
+      <li>📦 Lombok @Data annotation support</li>
+      <li>🕐 Generation history with full audit trail</li>
+      <li>📋 "Copy as Executable SQL" from MyBatis log output</li>
+      <li>▶️ Run MyBatis Generator with official XML configuration</li>
+    </ul>
+    ]]></description>
+
+    <change-notes><![CDATA[
+        <b>0.9.0</b> — Multi-IDE support (WebStorm, PhpStorm, etc.), 12 ORM frameworks (Java + JS/TS), language selector, overwrite protection.
+    ]]>
+    </change-notes>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends optional="true" config-file="java-features.xml">com.intellij.modules.java</depends>
+
+    <actions>
+        <!-- Settings -->
+        <action id="FastORMBuilder.Settings" text="FastORM Builder Settings" icon="/icons/fastBuilderAction.svg"
+                description="Open FastORM Builder tool window"
+                class="org.fastormbuilder.plugin.action.OpenSettingsAction"/>
+
+        <!-- Generate -->
+        <action id="FastORMBuilder.Generate" text="FastORM Builder Generate" icon="/icons/fastBuilderAction.svg"
+                description="Open FastORM Builder tool window for code generation"
+                class="org.fastormbuilder.plugin.action.GenerateAction"/>
+
+        <!-- Copy as Executable SQL popup menu -->
+        <action id="FastORMBuilder.CopyExecutableSQL" text="Copy as Executable SQL"
+                description="Copy MyBatis log SQL (requires 'Preparing: ' and 'Parameters: ' keywords) as executable SQL"
+                class="org.fastormbuilder.plugin.action.CopyExecutableSqlAction">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="CopyAsPlainText"/>
+            <add-to-group group-id="ConsoleEditorPopupMenu" anchor="after" relative-to-action="CutCopyPasteGroup"/>
+        </action>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- tool window -->
+        <toolWindow id="FastORM Builder" anchor="left" secondary="true" icon="/icons/toolWindowFastBuilder.svg"
+                    factoryClass="org.fastormbuilder.plugin.ui.FastBuilderToolWindowFactory"/>
+
+        <!-- application state -->
+        <applicationService serviceImplementation="org.fastormbuilder.plugin.FastBuilderAppConfig"/>
+
+        <!-- project state -->
+        <projectService serviceImplementation="org.fastormbuilder.plugin.FastBuilderProjectSettings"/>
+
+        <!-- core project service -->
+        <projectService serviceImplementation="org.fastormbuilder.plugin.FastBuilderCoreService"/>
+
+        <!-- notification group -->
+        <notificationGroup id="FastORMBuilder.Notifications" displayType="BALLOON" isLogByDefault="true"/>
+    </extensions>
+
+</idea-plugin>

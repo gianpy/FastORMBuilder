@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Getting Started with FastORM Builder</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 40px auto;
+            max-width: 800px;
+            color: #333;
+            padding: 0 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .step {
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 5px solid #007bff;
+        }
+        .step h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+        ul li {
+            margin-bottom: 8px;
+        }
+        ul li::before {
+            content: "🔹 ";
+        }
+        code {
+            background-color: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Getting Started with FastORM Builder</h1>
+
+    <p>FastORM Builder is an IntelliJ IDEA plugin designed to streamline your development workflow by automatically generating MyBatis ORM code from your database schema. It provides a user-friendly interface to configure and run the MyBatis Generator, creating Java models, mapper interfaces, and XML mapping files directly within your project.</p>
+
+    <h2>🛠️ How to Use</h2>
+
+    <div class="step">
+        <h3>1. 🖥️ Open the Tool Window</h3>
+        <p>Navigate to <code>View -> Tool Windows -> FastORM Builder</code> to open the main plugin panel.</p>
+    </div>
+
+    <div class="step">
+        <h3>2. 🔌 Configure Database Connection</h3>
+        <p>In the FastORM Builder panel, set up your database connection:</p>
+        <ul>
+            <li>Select your database vendor (e.g., PostgreSQL, MySQL, Oracle, etc.).</li>
+            <li>Enter the database URL, username, and password.</li>
+            <li>The necessary JDBC drivers are already included with the plugin.</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>3. ⚙️ Configure Generation Settings</h3>
+        <p>Specify the details for the code generation:</p>
+        <ul>
+            <li><strong>Project and Module:</strong> Select the target project and module where the files will be created.</li>
+            <li><strong>Package Names:</strong> Define the destination packages for your Java Models, Java Mappers (Interfaces), and XML Mappers.</li>
+            <li><strong>Table Selection:</strong> Choose the specific database tables for which you want to generate code.</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>4. ⚡ Generate Code</h3>
+        <p>Click the <strong>Generate</strong> button. The plugin will connect to your database, process the selected tables, and generate the corresponding files. Progress and logs will be displayed in the output panel.</p>
+    </div>
+
+    <div class="step">
+        <h3>5. 👀 Review Your Files</h3>
+        <p>Once the process is complete, the newly generated files (e.g., <code>User.java</code>, <code>UserMapper.java</code>, and <code>UserMapper.xml</code>) will appear in the specified packages within your project's source tree. You can now integrate these ORM classes into your application.</p>
+    </div>
+</body>
+</html>

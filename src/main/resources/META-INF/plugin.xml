@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.fastormbuilder.plugin</id>
     <name>FastORM Builder</name>
-    <version>0.9.0</version>
+    <version>0.9.1</version>
     <vendor>Gianpy</vendor>
 
     <description><![CDATA[
@@ -35,7 +35,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-        <b>0.9.0</b> — Multi-IDE support (WebStorm, PhpStorm, etc.), 12 ORM frameworks (Java + JS/TS), language selector, overwrite protection.
+        <b>0.9.1</b> — Multi-IDE support (WebStorm, PhpStorm, etc.), 12 ORM frameworks (Java + JS/TS), language selector, overwrite protection.
     ]]>
     </change-notes>
 

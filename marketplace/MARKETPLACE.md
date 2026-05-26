@@ -117,7 +117,7 @@ Full audit trail of every generation — what was generated, when, with which se
 |-------|-------|
 | **Name** | FastORM Builder |
 | **ID** | org.fastormbuilder.plugin |
-| **Version** | 0.9.1 |
+| **Version** | 0.9.2 |
 | **Category** | Code tools |
 | **Pricing** | Free |
 | **Compatibility** | All JetBrains IDEs 2024.1+ |

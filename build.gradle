@@ -18,7 +18,6 @@ intellij {
     plugins = ["com.intellij.java"]
     sameSinceUntilBuild = Boolean.valueOf(isEAP)
     patchPluginXml {
-        untilBuild = "241.*"
         changeNotes = "${project.file('changeNotes.txt').getText('UTF-8')}"
     }
 }

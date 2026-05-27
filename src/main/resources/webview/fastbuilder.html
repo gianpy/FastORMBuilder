@@ -501,6 +501,7 @@
             forceBigDecimals: false,
             useJSR310: true,
             useLombok: false,
+            useGeneratedAnnotation: false,
             historySize: 20
         });
         const [genParams, setGenParams] = useState({
@@ -530,6 +531,12 @@
                 setHistory(h);
             };
             window.updateDefaults = (d) => {
+                // Convert string booleans from backend to actual booleans
+                const boolKeys = ['forceBigDecimals', 'useJSR310', 'useLombok', 'useGeneratedAnnotation'];
+                for (const k of boolKeys) {
+                    if (k in d) d[k] = d[k] === true || d[k] === 'true';
+                }
+                if ('historySize' in d) d.historySize = parseInt(d.historySize) || 20;
                 setDefaults(prev => ({...prev, ...d}));
             };
             window.updatePkgHistory = (h) => {
@@ -1202,6 +1209,9 @@
                     </div>
                     <div className="check"><input type="checkbox" checked={defaults.useLombok}
                                                   onChange={e => upd('useLombok', e.target.checked)}/><span>Use Lombok</span>
+                    </div>
+                    <div className="check"><input type="checkbox" checked={defaults.useGeneratedAnnotation}
+                                                  onChange={e => upd('useGeneratedAnnotation', e.target.checked)}/><span>Add @Generated annotation (MyBatis)</span>
                     </div>
                     <div className="fg"><label>History Size</label><input type="number" value={defaults.historySize}
                                                                           onChange={e => upd('historySize', parseInt(e.target.value) || 20)}

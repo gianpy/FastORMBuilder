@@ -13,6 +13,7 @@ public class Defaults {
     private Boolean forceBigDecimals = true;
     private Boolean useJSR310Types = false;
     private Boolean useLombok = false;
+    private Boolean useGeneratedAnnotation = false;
     private String generatedComment = "generated automatically, do not modify!";
     private Integer historySize = 10;
 
@@ -82,6 +83,14 @@ public class Defaults {
 
     public void setUseLombok(Boolean useLombok) {
         this.useLombok = useLombok;
+    }
+
+    public Boolean getUseGeneratedAnnotation() {
+        return useGeneratedAnnotation;
+    }
+
+    public void setUseGeneratedAnnotation(Boolean useGeneratedAnnotation) {
+        this.useGeneratedAnnotation = useGeneratedAnnotation;
     }
 
     public Integer getHistorySize() {

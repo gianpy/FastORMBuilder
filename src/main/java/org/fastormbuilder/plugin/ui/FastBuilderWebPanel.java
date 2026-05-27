@@ -699,6 +699,7 @@ public class FastBuilderWebPanel extends JPanel {
         prefs.putIfAbsent("forceBigDecimals", String.valueOf(defaults.getForceBigDecimals()));
         prefs.putIfAbsent("useJSR310", String.valueOf(defaults.getUseJSR310Types()));
         prefs.putIfAbsent("lombok", String.valueOf(defaults.getUseLombok()));
+        prefs.putIfAbsent("useGeneratedAnnotation", String.valueOf(defaults.getUseGeneratedAnnotation()));
         prefs.putIfAbsent("historySize", String.valueOf(defaults.getHistorySize()));
         execJs("window.updateDefaults(" + gson.toJson(prefs) + ")");
     }
@@ -717,6 +718,8 @@ public class FastBuilderWebPanel extends JPanel {
         if (obj.has("forceBigDecimals")) defaults.setForceBigDecimals(obj.get("forceBigDecimals").getAsBoolean());
         if (obj.has("useJSR310")) defaults.setUseJSR310Types(obj.get("useJSR310").getAsBoolean());
         if (obj.has("lombok")) defaults.setUseLombok(obj.get("lombok").getAsBoolean());
+        if (obj.has("useGeneratedAnnotation"))
+            defaults.setUseGeneratedAnnotation(obj.get("useGeneratedAnnotation").getAsBoolean());
         if (obj.has("historySize")) defaults.setHistorySize(obj.get("historySize").getAsInt());
         service.saveDefaults(defaults);
         execJs("window.setStatus('Settings saved')");

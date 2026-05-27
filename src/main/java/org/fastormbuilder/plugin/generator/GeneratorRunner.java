@@ -103,8 +103,9 @@ public class GeneratorRunner {
         CommentGeneratorConfiguration commentConfig = new CommentGeneratorConfiguration();
         commentConfig.addProperty("suppressAllComments", "false");
         commentConfig.addProperty("suppressDate", "true");
-        if (TextUtils.hasValue(defaults.getGeneratedComment())) {
-            commentConfig.addProperty("addRemarkComments", "true");
+        commentConfig.addProperty("addRemarkComments", "true");
+        if (!Boolean.TRUE.equals(defaults.getUseGeneratedAnnotation())) {
+            commentConfig.addProperty("suppressAnnotation", "true");
         }
         context.setCommentGeneratorConfiguration(commentConfig);
 

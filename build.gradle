@@ -16,8 +16,9 @@ intellij {
     pluginName = "FastORM Builder"
     version = ideaVersion
     plugins = ["com.intellij.java"]
-    sameSinceUntilBuild = Boolean.valueOf(isEAP)
     patchPluginXml {
+        sinceBuild = "241"
+        untilBuild = ""
         changeNotes = "${project.file('changeNotes.txt').getText('UTF-8')}"
     }
 }

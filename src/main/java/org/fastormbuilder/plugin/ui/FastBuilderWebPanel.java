@@ -218,6 +218,7 @@ public class FastBuilderWebPanel extends JPanel {
                                 TableDto td = new TableDto();
                                 td.name = t.getName();
                                 td.comment = t.getComment();
+                                td.isView = t.getType() == DbNode.NodeType.VIEW;
                                 return td;
                             })
                             .collect(Collectors.toList());
@@ -756,5 +757,6 @@ public class FastBuilderWebPanel extends JPanel {
     private static class TableDto {
         String name;
         String comment;
+        boolean isView;
     }
 }

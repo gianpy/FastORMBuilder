@@ -790,7 +790,8 @@
                                             <div className="schema-header" onClick={() => toggleCollapse(s.name)}>
                                                 <span className="fold-icon">{collapsed[s.name] ? '▶' : '▼'}</span>
                                                 <span>🗄</span><strong>{s.name}</strong>
-                                                <span className="schema-count">{(s.tables || []).length} tables</span>
+                                                <span
+                                                    className="schema-count">{(s.tables || []).filter(t => !t.isView).length} tables, {(s.tables || []).filter(t => t.isView).length} views</span>
                                             </div>
                                             {!collapsed[s.name] && (s.tables || []).map(t => (
                                                 <div key={t.name} className="table-row"
@@ -798,6 +799,7 @@
                                                     <input type="checkbox"
                                                            checked={selectedTables.includes(s.name + '.' + t.name)}
                                                            readOnly/>
+                                                    <span className="table-icon">{t.isView ? '👁' : '▦'}</span>
                                                     <span className="table-name">{t.name}</span>
                                                     {t.comment && <span className="table-comment">{t.comment}</span>}
                                                 </div>

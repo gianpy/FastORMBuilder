@@ -1,7 +1,7 @@
 package org.fastormbuilder.plugin.model;
 
 public class DbNode {
-    public enum NodeType {CONNECTION, SCHEMA, TABLE}
+    public enum NodeType {CONNECTION, SCHEMA, TABLE, VIEW}
 
     private final String connId;
     private final String name;

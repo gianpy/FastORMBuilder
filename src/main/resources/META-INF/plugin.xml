@@ -5,7 +5,7 @@
     <vendor>Gianpy</vendor>
 
     <!-- Compatible with all JetBrains IDEs from 2024.1 onwards -->
-    <idea-version since-build="241" until-build=""/>
+    <idea-version since-build="241"/>
 
     <description><![CDATA[
     <b>FastORM Builder</b> — The fastest way to go from database schema to production-ready ORM code.
@@ -25,7 +25,7 @@
     <b>Key Features:</b>
     <ul>
       <li>🌐 Modern embedded web UI — no legacy dialogs</li>
-      <li>⚡ One-click code generation from database tables</li>
+      <li>⚡ One-click code generation from database tables and views</li>
       <li>🔄 Language selector: Java / JavaScript with ORM dropdown</li>
       <li>📝 JS/TS output toggle for all JavaScript ORM generators</li>
       <li>⚠️ Overwrite protection — warns before replacing existing files</li>
@@ -38,7 +38,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
-        <b>0.9.3</b> — Multi-IDE support (Intellij,WebStorm), 12 ORM frameworks (Java + JS/TS), language selector, overwrite protection.
+        <b>0.9.3</b> — Multi-IDE support (2024.1+), view support with distinct icons, 12 ORM frameworks (Java + JS/TS), language selector, overwrite protection.
     ]]>
     </change-notes>
 

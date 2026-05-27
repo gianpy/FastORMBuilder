@@ -1,6 +1,7 @@
 <b>0.9.3</b>
 <ul>
    <li>Multi-IDE support: works in IntelliJ IDEA, WebStorm, PhpStorm, PyCharm, and all JetBrains IDEs (2024.1+)</li>
+  <li>View support: database views are now listed alongside tables with a distinct icon (👁) for easy identification</li>
   <li>Language selector: Java / JavaScript with dedicated ORM dropdown</li>
   <li>Java ORMs: MyBatis, JPA, Hibernate, YORM</li>
   <li>JavaScript ORMs: Sequelize, Knex.js, Prisma, TypeORM, Bookshelf.js, Waterline, Objection.js, MikroORM</li>

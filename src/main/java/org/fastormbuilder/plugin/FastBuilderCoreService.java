@@ -152,10 +152,12 @@ public class FastBuilderCoreService {
                 // MySQL/MariaDB: schema is actually a catalog (database)
                 catalog = schema;
             }
-            String[] types = DriverType.DuckDB.equals(dt) ? null : new String[]{"TABLE"};
+            String[] types = DriverType.DuckDB.equals(dt) ? null : new String[]{"TABLE", "VIEW"};
             ResultSet rs = meta.getTables(catalog, schemaArg, null, types);
             while (rs.next()) {
-                list.add(DbNode.of(DbNode.NodeType.TABLE, rs.getString("TABLE_NAME"), rs.getString("REMARKS"), null));
+                String tableType = rs.getString("TABLE_TYPE");
+                DbNode.NodeType nodeType = "VIEW".equalsIgnoreCase(tableType) ? DbNode.NodeType.VIEW : DbNode.NodeType.TABLE;
+                list.add(DbNode.of(nodeType, rs.getString("TABLE_NAME"), rs.getString("REMARKS"), null));
             }
         }
         return list;

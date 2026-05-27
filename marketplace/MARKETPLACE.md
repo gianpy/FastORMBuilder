@@ -70,9 +70,10 @@ Full audit trail of every generation — what was generated, when, with which se
 
 ## ✨ Key Features
 
-- ⚡ **One-click generation** — Select tables → Generate. Done.
+- ⚡ **One-click generation** — Select tables or views → Generate. Done.
 - 🌐 **Modern web UI** — Fully embedded JCEF interface, no legacy Swing dialogs
 - 🔄 **12 ORM frameworks** — 4 Java + 8 JavaScript/TypeScript
+- 👁 **View support** — Generate code from database views, visually distinguished from tables
 - 🏗️ **Relationship detection** — Auto-generates `@ManyToOne` / `@OneToMany` from foreign keys
 - 📦 **Lombok support** — Optional `@Data` / `@Builder` for JPA and Hibernate entities
 - 🗄️ **6 databases** — MySQL, PostgreSQL, MariaDB, Oracle, SQLite, DuckDB
@@ -92,7 +93,7 @@ Full audit trail of every generation — what was generated, when, with which se
 3. Add a database connection → Test → Connect
 4. Select Java or JS, choose your ORM from the dropdown
 5. For JS: pick JS or TS output format
-6. Select tables and click ⚡ Generate — done!
+6. Select tables and/or views, then click ⚡ Generate — done!
 ```
 
 ---
@@ -146,9 +147,10 @@ Powered by a modern embedded web UI — everything happens in a single, fluid in
 
 <h3>Key Features</h3>
 <ul>
-  <li>⚡ <b>One-click generation</b> from database tables to complete ORM artifacts</li>
+  <li>⚡ <b>One-click generation</b> from database tables and views to complete ORM artifacts</li>
   <li>🌐 <b>Modern web UI</b> — fully embedded JCEF interface, no legacy dialogs</li>
   <li>🔄 <b>12 ORM frameworks</b>: 4 Java + 8 JavaScript/TypeScript</li>
+  <li>👁 <b>View support</b>: generate from database views, visually distinguished from tables</li>
   <li>🏗️ <b>Relationship mapping</b>: auto-detect FKs → @ManyToOne / @OneToMany</li>
   <li>📦 <b>Lombok support</b>: optional @Data/@Builder for entities</li>
   <li>⚠️ <b>Overwrite protection</b>: warns before overwriting existing files</li>

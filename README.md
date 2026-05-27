@@ -25,8 +25,9 @@
 - **Modern web-based UI** — Fully embedded JCEF interface, no legacy Swing dialogs
 - **Language selector** — Switch between Java and JavaScript ORMs with a single click
 - **JS/TS toggle** — Generate JavaScript or TypeScript output for all JS ORM frameworks
-- **One-click generation** from database tables to complete ORM artifacts
+- **One-click generation** from database tables and views to complete ORM artifacts
 - **Multi-database support**: MySQL, PostgreSQL, MariaDB, Oracle, SQLite, DuckDB
+- **View support** — Generate ORM code from database views, shown with a distinct icon (👁) in the table list
 - **Multi-IDE support**: IntelliJ IDEA, WebStorm, PhpStorm, PyCharm, and all JetBrains IDEs (2024.1+)
 - **Overwrite protection** — Warns before overwriting existing generated files
 - **Relationship detection** — Auto-generates `@ManyToOne` / `@OneToMany` from foreign keys
@@ -51,7 +52,7 @@ The plugin ZIP will be in `build/distributions/`.
 1. Open the **FastORM Builder** tool window (left sidebar)
 2. Add a database connection → Test → Connect
 3. Select **Java** or **JS** and choose your ORM framework from the dropdown
-4. Browse schemas and select tables
+4. Browse schemas and select tables or views
 5. Click **⚡ Generate** — done!
 
 All configuration (connections, defaults, generation settings) is managed directly in the integrated web UI.

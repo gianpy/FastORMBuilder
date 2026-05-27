@@ -513,6 +513,7 @@
             lombok: false
         });
         const [pkgHistory, setPkgHistory] = useState({modelPkgs: [], mapperPkgs: [], xmlPkgs: []});
+        const [modules, setModules] = useState([]);
         const [history, setHistory] = useState([]);
         const [overwriteFiles, setOverwriteFiles] = useState(null);
 
@@ -533,6 +534,9 @@
             };
             window.updatePkgHistory = (h) => {
                 setPkgHistory(h);
+            };
+            window.updateModules = (m) => {
+                setModules(m);
             };
             window.setStatus = (s) => setStatus(s);
             window.setConnectionStatus = (s) => setConnStatus(s);
@@ -625,7 +629,7 @@
                                        genParams={genParams} setGenParams={setGenParams} onGenerate={doGenerate}
                                        pkgHistory={pkgHistory} overwriteFiles={overwriteFiles}
                                        setOverwriteFiles={setOverwriteFiles}
-                                       doGenerateOverwrite={doGenerateOverwrite}/>}
+                                       doGenerateOverwrite={doGenerateOverwrite} modules={modules}/>}
                     {tab === 'history' && <HistoryPanel history={history}/>}
                 </div>
                 <div className="status"><span>{status}</span><span>{connStatus}</span></div>
@@ -679,7 +683,8 @@
                                pkgHistory,
                                overwriteFiles,
                                setOverwriteFiles,
-                               doGenerateOverwrite
+                               doGenerateOverwrite,
+                               modules
                            }) {
         const [subTab, setSubTab] = useState('tables');
         const [collapsed, setCollapsed] = useState({});
@@ -810,6 +815,14 @@
                         )}
                         {subTab === 'output' && genParams.mode === 'mybatis' && (
                             <div className="output-form">
+                                {modules.length > 0 && <div className="row">
+                                    <div className="fg"><label>Target Module</label><select
+                                        value={genParams.targetModule || ''}
+                                        onChange={e => upd('targetModule', e.target.value)}>
+                                        <option value="">Project root</option>
+                                        {modules.map(m => <option key={m} value={m}>{m}</option>)}
+                                    </select></div>
+                                </div>}
                                 <div className="row">
                                     <div className="fg"><label>Model Package</label><input value={genParams.modelPkg}
                                                                                            onChange={e => upd('modelPkg', e.target.value)}
@@ -855,6 +868,14 @@
                         )}
                         {subTab === 'output' && genParams.mode === 'jpa' && (
                             <div className="output-form">
+                                {modules.length > 0 && <div className="row">
+                                    <div className="fg"><label>Target Module</label><select
+                                        value={genParams.targetModule || ''}
+                                        onChange={e => upd('targetModule', e.target.value)}>
+                                        <option value="">Project root</option>
+                                        {modules.map(m => <option key={m} value={m}>{m}</option>)}
+                                    </select></div>
+                                </div>}
                                 <div className="row">
                                     <div className="fg"><label>Entity Package</label><input value={genParams.modelPkg}
                                                                                             onChange={e => upd('modelPkg', e.target.value)}
@@ -891,6 +912,14 @@
                         )}
                         {subTab === 'output' && genParams.mode === 'hibernate' && (
                             <div className="output-form">
+                                {modules.length > 0 && <div className="row">
+                                    <div className="fg"><label>Target Module</label><select
+                                        value={genParams.targetModule || ''}
+                                        onChange={e => upd('targetModule', e.target.value)}>
+                                        <option value="">Project root</option>
+                                        {modules.map(m => <option key={m} value={m}>{m}</option>)}
+                                    </select></div>
+                                </div>}
                                 <div className="row">
                                     <div className="fg"><label>Entity Package</label><input value={genParams.modelPkg}
                                                                                             onChange={e => upd('modelPkg', e.target.value)}
@@ -940,6 +969,14 @@
                         )}
                         {subTab === 'output' && genParams.mode === 'yorm' && (
                             <div className="output-form">
+                                {modules.length > 0 && <div className="row">
+                                    <div className="fg"><label>Target Module</label><select
+                                        value={genParams.targetModule || ''}
+                                        onChange={e => upd('targetModule', e.target.value)}>
+                                        <option value="">Project root</option>
+                                        {modules.map(m => <option key={m} value={m}>{m}</option>)}
+                                    </select></div>
+                                </div>}
                                 <div className="row">
                                     <div className="fg"><label>Record Package</label><input value={genParams.modelPkg}
                                                                                             onChange={e => upd('modelPkg', e.target.value)}

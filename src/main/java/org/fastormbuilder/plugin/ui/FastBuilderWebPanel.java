@@ -58,6 +58,7 @@ public class FastBuilderWebPanel extends JPanel {
                             pushConnections();
                             pushGenerationHistory(null);
                             pushPreferences();
+                            pushModules();
                         });
                     }
                 }, 300);
@@ -338,7 +339,7 @@ public class FastBuilderWebPanel extends JPanel {
             params.setSelectedTables(tables);
 
             // Override packages if provided
-            String base = project.getBasePath();
+            String base = resolveBase(obj);
             String src = base + "/src/main/java";
             String res = base + "/src/main/resources";
             if (!new java.io.File(src).exists()) src = base;
@@ -417,7 +418,7 @@ public class FastBuilderWebPanel extends JPanel {
             tableNames.add(dot > 0 ? entry.substring(dot + 1) : entry);
         }
 
-        String base = project.getBasePath();
+        String base = resolveBase(obj);
         String src = base + "/src/main/java";
         if (!new java.io.File(src).exists()) src = base;
 
@@ -480,7 +481,7 @@ public class FastBuilderWebPanel extends JPanel {
             tableNames.add(dot > 0 ? entry.substring(dot + 1) : entry);
         }
 
-        String base = project.getBasePath();
+        String base = resolveBase(obj);
         String src = base + "/src/main/java";
         String res = base + "/src/main/resources";
         if (!new java.io.File(src).exists()) src = base;
@@ -541,7 +542,7 @@ public class FastBuilderWebPanel extends JPanel {
             tableNames.add(dot > 0 ? entry.substring(dot + 1) : entry);
         }
 
-        String base = project.getBasePath();
+        String base = resolveBase(obj);
         String src = base + "/src/main/java";
         if (!new java.io.File(src).exists()) src = base;
 
@@ -599,7 +600,7 @@ public class FastBuilderWebPanel extends JPanel {
             tableNames.add(dot > 0 ? entry.substring(dot + 1) : entry);
         }
 
-        String base = project.getBasePath();
+        String base = resolveBase(obj);
         String outDir = getStr(obj, "modelPkg");
         if (outDir.isEmpty()) outDir = "models";
         if (!new java.io.File(outDir).isAbsolute()) {
@@ -742,6 +743,29 @@ public class FastBuilderWebPanel extends JPanel {
 
     private String escapeJs(String s) {
         return s == null ? "" : s.replace("\\", "\\\\").replace("'", "\\'").replace("\"", "\\\"").replace("\n", "\\n");
+    }
+
+    private String resolveBase(JsonObject obj) {
+        String targetModule = getStr(obj, "targetModule");
+        if (!targetModule.isEmpty()) {
+            com.intellij.openapi.module.Module[] modules = com.intellij.openapi.module.ModuleManager.getInstance(project).getModules();
+            for (com.intellij.openapi.module.Module m : modules) {
+                if (targetModule.equals(m.getName())) {
+                    String modulePath = com.intellij.openapi.module.ModuleUtilCore.getModuleDirPath(m);
+                    if (modulePath != null) return modulePath;
+                }
+            }
+        }
+        return project.getBasePath();
+    }
+
+    private void pushModules() {
+        com.intellij.openapi.module.Module[] modules = com.intellij.openapi.module.ModuleManager.getInstance(project).getModules();
+        List<String> names = new ArrayList<>();
+        for (com.intellij.openapi.module.Module m : modules) names.add(m.getName());
+        if (names.size() > 1) {
+            execJs("window.updateModules(" + gson.toJson(names) + ")");
+        }
     }
 
     public void dispose() {

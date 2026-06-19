@@ -1,0 +1,40 @@
+<application>
+  <component name="ActionsLocalSummary">
+    <e n="$Copy">
+      <i c="1" l="1781869430716" />
+    </e>
+    <e n="EditorCopy">
+      <i c="5" l="1781870600630" />
+    </e>
+    <e n="EditorLineEnd">
+      <i c="1" l="1781870583676" />
+    </e>
+    <e n="EditorLineEndWithSelection">
+      <i c="3" l="1781870599462" />
+    </e>
+    <e n="EditorLineStart">
+      <i c="2" l="1781869426251" />
+    </e>
+    <e n="EditorPaste">
+      <i c="1" l="1781869421815" />
+    </e>
+    <e n="WelcomeScreen.CreateNewProject">
+      <i c="1" l="1781854478015" />
+    </e>
+    <e n="com.intellij.ide.actions.ToolWindowViewModeAction">
+      <i c="1" l="1781854936279" />
+    </e>
+    <e n="com.intellij.ide.plugins.DynamicPluginVfsListener$prepareChange$2$afterVfsChange$1$1">
+      <i c="2" l="1781864700494" />
+    </e>
+    <e n="com.intellij.openapi.wm.impl.DockToolWindowAction">
+      <i c="1" l="1781854945865" />
+    </e>
+    <e n="com.intellij.openapi.wm.impl.SquareAnActionButton">
+      <i c="1" l="1781854542819" />
+    </e>
+    <e n="com.intellij.toolWindow.ToolWindowHeader$ShowOptionsAction">
+      <i c="1" l="1781854930929" />
+    </e>
+  </component>
+</application>

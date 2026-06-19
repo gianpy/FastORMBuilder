@@ -1,6 +1,5 @@
 package org.fastormbuilder.plugin;
 
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.fastormbuilder.plugin.database.JdbcDataSourceProvider;
@@ -25,7 +24,7 @@ public class FastBuilderCoreService {
     private final org.fastormbuilder.plugin.storage.FastBuilderStorage storage;
 
     public static FastBuilderCoreService getInstance(Project project) {
-        return ServiceManager.getService(project, FastBuilderCoreService.class);
+        return project.getService(FastBuilderCoreService.class);
     }
 
     public FastBuilderCoreService(Project project) {

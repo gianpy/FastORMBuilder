@@ -1,0 +1,110 @@
+{
+  "appInfo" : {
+    "build" : "261.25134.95",
+    "buildDate" : "2026-06-03T21:01:00Z[UTC]",
+    "productCode" : "IU",
+    "generated" : "2026-06-19T08:00:42.191331766Z",
+    "os" : "Linux 6.6.87.2-microsoft-standard-wsl2",
+    "runtime" : "JetBrains s.r.o. 25.0.3 25.0.3+9-b329.124"
+  },
+  "runtimeInfo" : {
+    "maxMemory" : 2147483648,
+    "numberOfProcessors" : 12,
+    "maxNumberOfIndexingThreads" : 11,
+    "maxSizeOfFileForIntelliSense" : 2560000,
+    "maxSizeOfFileForContentLoading" : 20971520
+  },
+  "type" : "Scanning",
+  "projectIndexingActivityHistory" : {
+    "projectName" : "untitled",
+    "times" : {
+      "scanningReason" : "changes in: \"Indexable set contributor 'com.intellij.javaee.ExternalResourcesRootsProvider@4b6f9b83' (non-project)\", \"Indexable set contributor 'com.intellij.httpClient.http.request.HttpRequestCollectionProvider@5674317d' (non-project)\", \"Indexable set contributor 'org.jetbrains.kotlin.idea.base.indices.contributors.BuiltInsIndexableSetContributor@247d7c1f' (non-project)\", \"Indexable set contributor 'JS required libraries' (project)\"",
+      "scanningType" : "PARTIAL",
+      "scanningId" : 1,
+      "creatingIteratorsTime" : 0,
+      "concurrentHandlingWallTimeWithoutPauses" : 0,
+      "concurrentHandlingWallTimeWithPauses" : 0,
+      "concurrentHandlingSumOfThreadTimesWithPauses" : 526921192,
+      "concurrentIterationAndScannersApplicationSumOfThreadTimesWithPauses" : 34139421,
+      "concurrentFileCheckSumOfThreadTimesWithPauses" : 490870752,
+      "delayedPushPropertiesStageTime" : 0,
+      "indexExtensionsTime" : 12338907,
+      "dumbModeStart" : "2026-06-19T08:00:41.977022954Z",
+      "dumbWallTimeWithPauses" : 211900892,
+      "dumbWallTimeWithoutPauses" : 211900892,
+      "updatingStart" : "2026-06-19T08:00:41.894712519Z",
+      "updatingEnd" : "2026-06-19T08:00:42.188923846Z",
+      "totalWallTimeWithPauses" : 294211327,
+      "wallTimeOnPause" : 1068143,
+      "isCancelled" : false,
+      "totalWallTimeWithoutPauses" : 293143184
+    },
+    "fileCount" : {
+      "numberOfFileProviders" : 4,
+      "numberOfScannedFiles" : 305,
+      "numberOfFilesIndexedByInfrastructureExtensionsDuringScan" : 0,
+      "numberOfFilesScheduledForIndexingAfterScan" : 305
+    },
+    "scanningStatistics" : [ {
+      "providerName" : "Indexable set contributor 'JS required libraries' (project)",
+      "numberOfScannedFiles" : 109,
+      "numberOfSkippedFiles" : 0,
+      "numberOfFilesForIndexing" : 109,
+      "numberOfFilesFullyIndexedByInfrastructureExtensions" : 0,
+      "filesFullyIndexedByInfrastructureExtensions" : [ ],
+      "statusTime" : 207314683,
+      "totalOneThreadTimeWithPauses" : 242063602,
+      "iterationAndScannersApplicationTime" : 501904,
+      "filesCheckTime" : 241094858,
+      "timeProcessingUpToDateFiles" : 0,
+      "timeUpdatingContentLessIndexes" : 55592241,
+      "timeIndexingWithoutContentViaInfrastructureExtension" : 4999077,
+      "roots" : [ ]
+    }, {
+      "providerName" : "Indexable set contributor 'com.intellij.javaee.ExternalResourcesRootsProvider@4b6f9b83' (non-project)",
+      "numberOfScannedFiles" : 186,
+      "numberOfSkippedFiles" : 4,
+      "numberOfFilesForIndexing" : 186,
+      "numberOfFilesFullyIndexedByInfrastructureExtensions" : 0,
+      "filesFullyIndexedByInfrastructureExtensions" : [ ],
+      "statusTime" : 175701285,
+      "totalOneThreadTimeWithPauses" : 233865686,
+      "iterationAndScannersApplicationTime" : 30074290,
+      "filesCheckTime" : 203227754,
+      "timeProcessingUpToDateFiles" : 0,
+      "timeUpdatingContentLessIndexes" : 64246238,
+      "timeIndexingWithoutContentViaInfrastructureExtension" : 6712302,
+      "roots" : [ ]
+    }, {
+      "providerName" : "Indexable set contributor 'org.jetbrains.kotlin.idea.base.indices.contributors.BuiltInsIndexableSetContributor@247d7c1f' (non-project)",
+      "numberOfScannedFiles" : 8,
+      "numberOfSkippedFiles" : 0,
+      "numberOfFilesForIndexing" : 8,
+      "numberOfFilesFullyIndexedByInfrastructureExtensions" : 0,
+      "filesFullyIndexedByInfrastructureExtensions" : [ ],
+      "statusTime" : 12431781,
+      "totalOneThreadTimeWithPauses" : 29761064,
+      "iterationAndScannersApplicationTime" : 86247,
+      "filesCheckTime" : 29336631,
+      "timeProcessingUpToDateFiles" : 0,
+      "timeUpdatingContentLessIndexes" : 2607104,
+      "timeIndexingWithoutContentViaInfrastructureExtension" : 521329,
+      "roots" : [ ]
+    }, {
+      "providerName" : "Indexable set contributor 'com.intellij.httpClient.http.request.HttpRequestCollectionProvider@5674317d' (non-project)",
+      "numberOfScannedFiles" : 2,
+      "numberOfSkippedFiles" : 0,
+      "numberOfFilesForIndexing" : 2,
+      "numberOfFilesFullyIndexedByInfrastructureExtensions" : 0,
+      "filesFullyIndexedByInfrastructureExtensions" : [ ],
+      "statusTime" : 4547102,
+      "totalOneThreadTimeWithPauses" : 21230840,
+      "iterationAndScannersApplicationTime" : 3476980,
+      "filesCheckTime" : 17211509,
+      "timeProcessingUpToDateFiles" : 0,
+      "timeUpdatingContentLessIndexes" : 1862270,
+      "timeIndexingWithoutContentViaInfrastructureExtension" : 106199,
+      "roots" : [ ]
+    } ]
+  }
+}

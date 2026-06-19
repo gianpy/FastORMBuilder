@@ -1,0 +1,5 @@
+============= 2026-06-19 10:25:09.887858841 UTC
+    0 [info ] args: ["/home/gianpy/.gradle/caches/9.0.0/transforms/bb312177641eeaba10bfce7856d8d041/transformed/idea-2026.1.3/bin/restarter", "29461", "1", "/home/gianpy/.gradle/caches/9.0.0/transforms/bb312177641eeaba10bfce7856d8d041/transformed/idea-2026.1.3/bin/idea.sh"]
+    0 [info ] CWD: Ok("/home/gianpy")
+    0 [info ] waiting for 29461
+  601 [info ] exec-ing: ["/home/gianpy/.gradle/caches/9.0.0/transforms/bb312177641eeaba10bfce7856d8d041/transformed/idea-2026.1.3/bin/idea.sh"]

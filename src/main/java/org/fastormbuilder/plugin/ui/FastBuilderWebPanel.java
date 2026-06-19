@@ -65,13 +65,22 @@ public class FastBuilderWebPanel extends JPanel {
             }
         }, browser.getCefBrowser());
 
-        // Load HTML from resources as string (JCEF can't load jar: URLs)
+        // Extract webview resources to a temp directory and load via file:// URL
         try {
-            java.io.InputStream is = getClass().getResourceAsStream("/webview/fastbuilder.html");
-            if (is != null) {
-                String html = new String(is.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8);
-                browser.loadHTML(html);
+            java.io.File tmpDir = new java.io.File(System.getProperty("java.io.tmpdir"), "fastbuilder-webview");
+            if (!tmpDir.exists()) tmpDir.mkdirs();
+
+            String[] resources = {"fastbuilder.html", "react.production.min.js", "react-dom.production.min.js", "app.compiled.js"};
+            for (String res : resources) {
+                java.io.InputStream is = getClass().getResourceAsStream("/webview/" + res);
+                if (is != null) {
+                    java.nio.file.Files.write(new java.io.File(tmpDir, res).toPath(), is.readAllBytes(),
+                            java.nio.file.StandardOpenOption.CREATE, java.nio.file.StandardOpenOption.TRUNCATE_EXISTING);
+                }
             }
+
+            java.io.File htmlFile = new java.io.File(tmpDir, "fastbuilder.html");
+            browser.loadURL(htmlFile.toURI().toString());
         } catch (Exception e) {
             browser.loadHTML("<html><body><h3>Failed to load UI: " + e.getMessage() + "</h3></body></html>");
         }

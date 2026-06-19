@@ -2,6 +2,7 @@ package org.fastormbuilder.plugin;
 
 import org.fastormbuilder.plugin.model.AppConfig;
 import org.fastormbuilder.plugin.util.TextUtils;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.*;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +18,7 @@ public class FastBuilderAppConfig implements PersistentStateComponent<AppConfig>
     private AppConfig config = new AppConfig();
 
     public static FastBuilderAppConfig getInstance() {
-        return ServiceManager.getService(FastBuilderAppConfig.class);
+        return ApplicationManager.getApplication().getService(FastBuilderAppConfig.class);
     }
 
     @Nullable @Override public AppConfig getState() { return config; }

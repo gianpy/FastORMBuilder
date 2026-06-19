@@ -1,0 +1,16 @@
+FsRecords.DIRECTORY_CHILDREN
+FsRecords.SYMLINK_TARGET
+template_language
+
+sql_dialect
+GenericSQL
+css_dialect_persistence
+CLASSIC
+language_level_persistence
+js.minified.store
+AUTO_DETECTION_CACHE_ATTRIBUTE
+kotlin-is-binary-compiled
+file.content.hash.forward.multi.index
+6920316d
+contractInference
+javascript.file.is.probably.test

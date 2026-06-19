@@ -24,7 +24,7 @@ public class FastBuilderProjectSettings implements PersistentStateComponent<Proj
     private ProjectData data = new ProjectData();
 
     public static FastBuilderProjectSettings getInstance(Project project) {
-        return ServiceManager.getService(project, FastBuilderProjectSettings.class);
+        return project.getService(FastBuilderProjectSettings.class);
     }
 
     public ProjectData getData() { return data; }
